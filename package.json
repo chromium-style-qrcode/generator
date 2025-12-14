@@ -1,20 +1,56 @@
 {
-  "name": "generator",
+  "name": "@chromium-style-qrcode/generator",
   "version": "n/a",
+  "type": "module",
   "description": "A Chromium Style QR Code Generator using Rust and WebAssembly",
-  "main": "n/a",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
+  "unpkg": "dist/index.umd.js",
+  "types": "dist/qrcode.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/qrcode.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./wasm": {
+      "import": "./dist/qrcode_bg.wasm"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:wasm": "wasm-pack build --target web --out-dir src"
+    "build:wasm": "wasm-pack build --target web --out-dir src --out-name qrcode",
+    "build:lib": "vite build --mode lib && pnpm build:copy",
+    "build:copy": "node scripts/copy-wasm.js",
+    "prepublishOnly": "pnpm build:wasm && pnpm build:lib"
   },
-  "author": "liuliang@webfrontend.dev",
   "engines": {
     "node": ">=22.14.0",
-    "pnpm": ">=10.8.0"
+    "pnpm": ">=10.25.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/chromium-style-qrcode/generator.git"
+  },
+  "keywords": [
+    "rust",
+    "wasm",
+    "qrcode",
+    "webassembly",
+    "chromium-style"
+  ],
+  "author": "liuliang@webfrontend.dev",
   "license": "MIT",
-  "packageManager": "pnpm@10.8.0",
+  "sideEffects": false,
+  "packageManager": "pnpm@10.25.0",
   "devDependencies": {
     "vite": "^6.2.6"
   }
