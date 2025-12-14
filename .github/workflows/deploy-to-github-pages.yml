@@ -27,37 +27,16 @@ jobs:
           version: '10.25.0'
           run_install: false
 
-      - name: Setup Rust toolchain
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
-          profile: minimal
-          override: true
-          target: wasm32-unknown-unknown
-
-      - name: Install wasm-pack
-        uses: jetli/wasm-pack-action@v0.4.0
-        with:
-          version: 'latest'
-
       - name: Cache pnpm dependencies
         uses: actions/cache@v3
         with:
-          path: |
-            ~/.pnpm-store
-            node_modules
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}-${{ hashFiles('**/Cargo.lock') }}
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-pnpm-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-pnpm-
 
       - name: Install dependencies
         run: pnpm install
-
-      - name: Build WebAssembly
-        run: pnpm build:wasm
 
       - name: Build Assets
         run: pnpm build

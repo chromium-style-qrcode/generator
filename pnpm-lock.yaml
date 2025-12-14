@@ -7,12 +7,20 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@chromium-style-qrcode/generator':
+        specifier: ^1.0.0
+        version: 1.0.0
     devDependencies:
       vite:
         specifier: ^6.2.6
         version: 6.2.6
 
 packages:
+
+  '@chromium-style-qrcode/generator@1.0.0':
+    resolution: {integrity: sha512-BvrZJI23ravxaeHvOecqwhKvZ5Kr4qGjjnPVzhT4yLAomWkvdsVzRnpcqUfkHs9Pd1Sw4lb8KEYbxNZgcwDYbw==}
+    engines: {node: '>=22.14.0', pnpm: '>=10.25.0'}
 
   '@esbuild/aix-ppc64@0.25.2':
     resolution: {integrity: sha512-wCIboOL2yXZym2cgm6mlA742s9QeJ8DjGVaL39dLN4rRwrOgOyYSnOaFPhKZGLb2ngj4EyfAFjsNJwPXZvseag==}
@@ -350,6 +358,8 @@ packages:
         optional: true
 
 snapshots:
+
+  '@chromium-style-qrcode/generator@1.0.0': {}
 
   '@esbuild/aix-ppc64@0.25.2':
     optional: true
