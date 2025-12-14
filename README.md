@@ -33,7 +33,41 @@ This is a high-performance QR code generator developed with Rust and WebAssembly
 
 ## Installation and Usage
 
-### Prerequisites
+### As npm Package
+
+```bash
+npm install @chromium-style-qrcode/generator
+```
+
+```javascript
+import {
+  QuietZone,
+  initialize,
+  CenterImage,
+  ModuleStyle,
+  LocatorStyle,
+  generateQRCode,
+} from '@chromium-style-qrcode/generator';
+
+// Initialize WASM module (required before generating)
+await initialize();
+
+// Generate QR code
+const result = generateQRCode('https://example.com', {
+  moduleStyle: ModuleStyle.Circles,
+  locatorStyle: LocatorStyle.Rounded,
+  centerImage: CenterImage.Dino,
+  quietZone: QuietZone.WillBeAddedByClient,
+});
+
+console.log(result.data); // Uint8Array of QR code data
+console.log(result.size); // Size including quiet zone
+console.log(result.original_size); // Original QR code size
+```
+
+### Development Setup
+
+#### Prerequisites
 
 - [Rust](https://www.rust-lang.org/tools/install)
 - [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)
@@ -80,10 +114,14 @@ This is a high-performance QR code generator developed with Rust and WebAssembly
 ```text
 ├── src/              # Source code directory
 │   ├── lib.rs        # Rust WebAssembly module core code
-│   ├── app.js        # Frontend JavaScript logic
+│   ├── index.js      # Library entry point
+│   ├── app.js        # Demo app JavaScript logic
 │   └── app.css       # Stylesheet
+├── scripts/          # Build scripts
+│   └── copy-wasm.js  # Copy WASM artifacts to dist
+├── dist/             # Built library output (npm package)
 ├── public/           # Static resources
-├── index.html        # Main HTML page
+├── index.html        # Demo page
 ├── Cargo.toml        # Rust project configuration
 └── package.json      # JavaScript project configuration
 ```
@@ -107,6 +145,26 @@ If you modify `lib.rs` or other Rust code, you need to rebuild the WebAssembly m
 ```bash
 pnpm build:wasm
 ```
+
+### Building the npm Package
+
+To build the library for npm publishing:
+
+```bash
+pnpm build:lib
+```
+
+This will:
+1. Build the library with Vite (ES, CJS, UMD formats)
+2. Copy WASM artifacts to `dist/`
+
+### Publishing to npm
+
+```bash
+pnpm publish
+```
+
+The `prepublishOnly` script will automatically run `build:wasm` and `build:lib`.
 
 ### Modifying Frontend Code
 

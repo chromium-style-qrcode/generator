@@ -1,6 +1,6 @@
 {
   "name": "@chromium-style-qrcode/generator",
-  "version": "n/a",
+  "version": "1.0.0-alpha.0",
   "type": "module",
   "description": "A Chromium Style QR Code Generator using Rust and WebAssembly",
   "main": "dist/index.cjs",

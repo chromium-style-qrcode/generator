@@ -1,11 +1,12 @@
-// Import the wasm-bindgen generated glue code
-import init, {
+// Import from the npm package
+import {
   QuietZone,
+  initialize,
   CenterImage,
   ModuleStyle,
   LocatorStyle,
-  generate_qr_code_with_options,
-} from './generator.js';
+  generateQRCode as doGenerateQRCode,
+} from '@chromium-style-qrcode/generator';
 
 const urlInput = document.getElementById('urlInput');
 const qrCanvas = document.getElementById('qrCanvas');
@@ -496,13 +497,12 @@ async function generateQRCode() {
 
   try {
     // Use the Chromium-style options exactly matching the Android implementation
-    const result = generate_qr_code_with_options(
-      inputText,
-      ModuleStyle.Circles, // Data modules as circles (kCircles)
-      LocatorStyle.Rounded, // Rounded locators (kRounded)
-      CenterImage.Dino, // Dino center image (kDino)
-      QuietZone.WillBeAddedByClient // Match Android bridge layer behavior
-    );
+    const result = doGenerateQRCode(inputText, {
+      moduleStyle: ModuleStyle.Circles, // Data modules as circles (kCircles)
+      locatorStyle: LocatorStyle.Rounded, // Rounded locators (kRounded)
+      centerImage: CenterImage.Dino, // Dino center image (kDino)
+      quietZone: QuietZone.WillBeAddedByClient, // Match Android bridge layer behavior
+    });
 
     if (!result || !result.data) {
       displayError('UNKNOWN_ERROR');
@@ -722,7 +722,7 @@ function renderQRCodeAtSize(ctx, targetSize, pixelData, size) {
 // --- Initialization ---
 async function run() {
   // Initialize the Wasm module
-  await init();
+  await initialize();
   console.log('Wasm module initialized.');
 
   // Add event listeners

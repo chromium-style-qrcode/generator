@@ -33,7 +33,41 @@
 
 ## 安装与使用
 
-### 前置条件
+### 作为 npm 包使用
+
+```bash
+npm install @chromium-style-qrcode/generator
+```
+
+```javascript
+import {
+  QuietZone,
+  initialize,
+  CenterImage,
+  ModuleStyle,
+  LocatorStyle,
+  generateQRCode,
+} from '@chromium-style-qrcode/generator';
+
+// 初始化 WASM 模块（生成前必须调用）
+await initialize();
+
+// 生成 QR 码
+const result = generateQRCode('https://example.com', {
+  moduleStyle: ModuleStyle.Circles,
+  locatorStyle: LocatorStyle.Rounded,
+  centerImage: CenterImage.Dino,
+  quietZone: QuietZone.WillBeAddedByClient,
+});
+
+console.log(result.data); // QR 码数据的 Uint8Array
+console.log(result.size); // 包含安静区的尺寸
+console.log(result.original_size); // 原始 QR 码尺寸
+```
+
+### 开发环境设置
+
+#### 前置条件
 
 - [Rust](https://www.rust-lang.org/tools/install)
 - [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)
@@ -80,10 +114,14 @@
 ```text
 ├── src/              # 源代码目录
 │   ├── lib.rs        # Rust WebAssembly 模块核心代码
-│   ├── app.js        # 前端 JavaScript 逻辑
+│   ├── index.js      # 库入口文件
+│   ├── app.js        # 演示应用 JavaScript 逻辑
 │   └── app.css       # 样式表
+├── scripts/          # 构建脚本
+│   └── copy-wasm.js  # 复制 WASM 产物到 dist
+├── dist/             # 构建输出目录（npm 包）
 ├── public/           # 静态资源
-├── index.html        # 主 HTML 页面
+├── index.html        # 演示页面
 ├── Cargo.toml        # Rust 项目配置
 └── package.json      # JavaScript 项目配置
 ```
@@ -107,6 +145,26 @@
 ```bash
 pnpm build:wasm
 ```
+
+### 构建 npm 包
+
+构建用于 npm 发布的库：
+
+```bash
+pnpm build:lib
+```
+
+这将：
+1. 使用 Vite 构建库（ES、CJS、UMD 格式）
+2. 复制 WASM 产物到 `dist/` 目录
+
+### 发布到 npm
+
+```bash
+pnpm publish
+```
+
+`prepublishOnly` 脚本会自动运行 `build:wasm` 和 `build:lib`。
 
 ### 修改前端代码
 
