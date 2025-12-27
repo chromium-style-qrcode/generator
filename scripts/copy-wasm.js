@@ -19,6 +19,7 @@ if (!existsSync(distDir)) {
 
 // Files to copy (wasm-pack already generates .d.ts files)
 const filesToCopy = [
+  'index.d.ts',
   'qrcode_bg.wasm',
   'qrcode.js',
   'qrcode.d.ts',
