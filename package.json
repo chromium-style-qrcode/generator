@@ -18,7 +18,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/favicon.ico"
   ],
   "publishConfig": {
     "access": "public",
