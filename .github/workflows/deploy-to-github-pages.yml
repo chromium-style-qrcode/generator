@@ -38,6 +38,15 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install wasm-pack
+        run: cargo install wasm-pack --locked
+
+      - name: Build WebAssembly
+        run: pnpm build:wasm
+
       - name: Build Assets
         run: pnpm build
 

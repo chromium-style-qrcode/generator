@@ -44,5 +44,11 @@ export default ({ mode }) => {
   // Development/Production build (demo page)
   return defineConfig({
     ...(isProd(mode) ? { base: BASE } : null),
+    resolve: {
+      alias: {
+        // Let the demo build use local sources instead of requiring built dist/ entrypoints
+        '@chromium-style-qrcode/generator': resolve(__dirname, 'src/index.js'),
+      },
+    },
   });
 };
