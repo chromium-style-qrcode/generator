@@ -70,7 +70,7 @@ console.log(result.original_size); // 原始 QR 码尺寸
 #### 前置条件
 
 - [Rust](https://www.rust-lang.org/tools/install)
-- [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)
+- [wasm-pack](https://wasm-bindgen.github.io/wasm-pack/installer/)
 - [Node.js](https://nodejs.org/) (推荐使用 pnpm 包管理器)
 
 ### 构建步骤

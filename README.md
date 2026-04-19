@@ -70,7 +70,7 @@ console.log(result.original_size); // Original QR code size
 #### Prerequisites
 
 - [Rust](https://www.rust-lang.org/tools/install)
-- [wasm-pack](https://rustwasm.github.io/wasm-pack/installer/)
+- [wasm-pack](https://wasm-bindgen.github.io/wasm-pack/installer/)
 - [Node.js](https://nodejs.org/) (pnpm package manager recommended)
 
 ### Build Steps

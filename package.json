@@ -13,8 +13,14 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./package.json": {
+      "import": "./package.json",
+      "require": "./package.json"
+    },
     "./wasm": {
-      "import": "./dist/qrcode_bg.wasm"
+      "types": "./dist/qrcode_bg.wasm.d.ts",
+      "import": "./dist/qrcode_bg.wasm",
+      "require": "./dist/qrcode_bg.wasm"
     }
   },
   "files": [
